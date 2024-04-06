@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- 카메라 -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <application
+        android:name=".MyApplication"
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Project04_240225"
+        android:usesCleartextTraffic="true"
+        tools:targetApi="31">
+
+        <activity
+            android:name=".ui.login.LoginActivity"
+            android:exported="false"
+            android:label="@string/title_activity_login" />
+        <activity
+            android:name=".View.ChatActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".View.ChatListViewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".View.SNSSignUpActivity"
+            android:exported="false" />
+        <activity
+            android:name=".View.WithdrawActivity"
+            android:exported="false" />
+        <activity
+            android:name=".View.EditAuthDataActivity"
+            android:exported="false" />
+        <activity
+            android:name=".View.EditPasswordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".View.EditNameActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.project04_240225.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_path" />
+        </provider>
+
+        <activity
+            android:name=".View.EditProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".View.MyInfoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".View.FindAccountPwActivity"
+            android:exported="false" />
+        <activity
+            android:name=".View.FindAccountIdActivity"
+            android:exported="false" />
+        <activity
+            android:name=".View.LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".View.MainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".View.TermActivity"
+            android:exported="false" />
+        <activity
+            android:name=".View.SignUpActivity"
+            android:exported="false" />
+        <activity
+            android:name=".View.LogoActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!--   인증코드를 받는 Activity , 받은 인증코드로 토큰도 발급  -->
+        <activity
+            android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <!-- Redirect URI: "kakao${NATIVE_APP_KEY}://oauth" -->
+                <data
+                    android:host="oauth"
+                    android:scheme="kakao5bca12ef41e8ed7d2a695d850285515b" />
+            </intent-filter>
+        </activity>
+
+
+<!--        외부에서 접근할 수 있다 라는 의미 android:exported="true"-->
+        <activity
+            android:name=".View.MainActivity2"
+            android:exported="true">
+<!--            반응할 인텐트의 형식을 정하는 것 -->
+<!--            이 태그 내에서 구체적으로 어떤 액션(action), 데이터 유형(data), 카테고리(category)에 대해 해당 구성 요소가 반응할 것인지를 명시할 수 있습니다.-->
+            <intent-filter>
+                <!--     웹브라우저 등 다른 애플리케이션과 데이터를 주고받기 위해 필요  (받아서 보여주는 것)         -->
+                <action android:name="android.intent.action.VIEW" />
+                <!--       암시적 인텐트를 받는걸 허용하는거. 시스템에서 발생하거나 다른 앱에서 발생하는 인텐트에 반응하기 위함        -->
+                <category android:name="android.intent.category.DEFAULT" />
+                <!--     웹 브라우저의 인텐트에 반응하겠다. (없으면 반응 x)           -->
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <!-- Redirect URI: "kakao${NATIVE_APP_KEY}://oauth" -->
+<!--                엑티비티가 처리할 수 있는 데이터 유형을 명시하는 것-->
+                <data
+                    android:scheme="https"
+                    android:host="test123456.com"
+                    android:pathPrefix="/logout" />
+
+            </intent-filter>
+        </activity>
+
+
+        <receiver
+            android:name=".MySMSBroadcastReceiver"
+            android:exported="true"
+            android:permission="com.google.android.gms.auth.api.phone.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.gms.auth.api.phone.SMS_RETRIEVED" />
+            </intent-filter>
+        </receiver>
+    </application>
+
+</manifest>
